@@ -281,7 +281,9 @@ This lab is intended **strictly for educational and authorized testing purposes*
 ## Author
 
 **Kritika Rai**
+
 Batch: B083 — NetworkWalks Cybersecurity Internship
 
 - LinkedIn: [https://in.linkedin.com/in/kritika-rai-b46259406]
-- GitHub: [your GitHub URL]
+- GitHub: [https://github.com/kritika1808]
+  
