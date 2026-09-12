@@ -140,7 +140,7 @@ Allocated resources:
 
 The VM was powered on and reached the Kali desktop successfully.
 
-![Kali desktop after first boot](kali_desktop.PNG)
+![Kali desktop after first boot](kalidesktop.PNG)
 
 ---
 
