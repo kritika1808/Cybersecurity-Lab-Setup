@@ -223,7 +223,7 @@ If the issue persists:
 > **Note:** Connection names (e.g. `"Wired connection 1"`) may differ between systems — verify the actual connection name with `nmcli connection show` before running the fix commands.
 >
 
-## Problem 2. VM Fails to Start (Virtualization Not Enabled
+## Problem 2. VM Fails to Start (Virtualization Not Enabled)
 
 When starting the Kali VM, VirtualBox displays an error indicating that hardware virtualization (VT-x on Intel or AMD-V on AMD) is not available or not enabled, and the VM refuses to boot.
 
