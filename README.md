@@ -83,9 +83,9 @@ This lab provides an isolated environment for cybersecurity learning and **autho
 
 The latest recommended version of Oracle VirtualBox was downloaded and installed as the hypervisor, along with the matching Extension Pack.
 
-![VirtualBox homepage](screenshot(12).PNG)
+![VirtualBox homepage](vb.PNG)
 
-![VirtualBox Extension Pack download page](screenshot(13).PNG)
+![VirtualBox Extension Pack download page](vb2.PNG)
 
 **Source:** https://virtualbox.org/wiki/Downloads
 
@@ -104,24 +104,22 @@ DHCP:          Enabled
 IPv6:          Disabled
 ```
 
+![NAT Network configuration](nat.PNG)
+
 A **NAT Network** (rather than plain NAT) was chosen because it allows multiple VMs attached to the same network to communicate with each other while still providing outbound Internet access — essential for building a multi-machine lab.
 
 ---
 
 ## Step 4. Download and Import Kali Linux
 
-The Kali Linux pre-built VirtualBox VM was downloaded from the official Kali site and imported into VirtualBox.
+The Kali Linux pre-built VirtualBox VM was downloaded from the official Kali site and Extract the downloaded archive if required and import the Kali Linux VM into VirtualBox.
 
 **Source:** https://kali.org/get-kali
 
 VM settings configured after import:
 
+The VM's network adapter was set as follows:
 ```
-General:
-  OS Type:        Debian (64-bit)
-  Base Memory:    2048 MB
-  Processors:     2
-
 Network (Adapter 1):
   Enable Network Adapter: Yes
   Attached to:             NAT Network
@@ -129,22 +127,28 @@ Network (Adapter 1):
   Adapter Type:            Intel PRO/1000 MT Desktop (82540EM)
   Promiscuous Mode:        Allow All
   Cable Connected:         Yes
-
-General → Advanced:
-  Shared Clipboard:  Bidirectional
-  Drag'n'Drop:       Bidirectional
-
-Shared Folders:
-  Name:   Downloads
-  Path:   Host Downloads folder (e.g. C:\Users\<user>\Downloads)
-  Access: Full, Auto-mount: Yes
 ```
+![Adapter](network.PNG)
+
+Allocated resources:
+```
+  OS Type:        Debian (64-bit)
+  Base Memory:    2048 MB
+  Processors:     2
+```
+![VirtualBox Manager showing imported VM details](Capture.PNG)
+
+The VM was powered on and reached the Kali desktop successfully.
+
+![Kali desktop after first boot](kali_desktop.PNG)
 
 ---
 
 ## Step 5. Configure the Kali Linux IP Address
 
 Inside Kali, the network connection was edited manually via **Network Manager → Wired connection 1 → IPv4 Settings**:
+
+![Editing Wired connection 1 - IPv4 manual settings](connection_1.PNG)
 
 ```
 Method:        Manual
@@ -154,12 +158,19 @@ Gateway:       10.0.0.1
 DNS servers:   8.8.8.8   (use 10.0.0.1 if Internet access has issues)
 ```
 
+![network setting](connection_2.PNG)
+
 The connection was then taken down and brought back up to apply the new settings:
 
-```bash
+```
 sudo nmcli connection down "Wired connection 1"
 sudo nmcli connection up "Wired connection 1"
 ```
+![Terminal running nmcli commands](command.PNG)
+
+Internet access was then confirmed by opening Firefox inside Kali and successfully loading a web page.
+
+![Successful browsing confirming DNS resolution](verify.PNG)
 
 ---
 
@@ -170,6 +181,7 @@ Once networking was confirmed working, a snapshot was taken in VirtualBox to pre
 ```
 Snapshot Name: First Kali - Network Configured
 ```
+![Snapshots panel showing First Kali - Network Configured](snapshot.PNG)
 
 This snapshot can be restored at any time if the VM is broken during future exercises.
 
@@ -195,7 +207,7 @@ This is a known, common issue on **VirtualBox v7** with **Kali Linux 2026.1 and 
 
 **Fix used:**
 
-```bash
+```
 sudo nmcli connection modify "Wired connection 1" ipv4.dad-timeout 0
 sudo nmcli connection down "Wired connection 1"
 sudo nmcli connection up "Wired connection 1"
@@ -209,6 +221,25 @@ If the issue persists:
 4. Restart all VMs and the host machine if the problem continues.
 
 > **Note:** Connection names (e.g. `"Wired connection 1"`) may differ between systems — verify the actual connection name with `nmcli connection show` before running the fix commands.
+>
+
+## Problem 2. VM Fails to Start (Virtualization Not Enabled
+
+When starting the Kali VM, VirtualBox displays an error indicating that hardware virtualization (VT-x on Intel or AMD-V on AMD) is not available or not enabled, and the VM refuses to boot.
+
+It causes due to Hardware virtualization is typically disabled by default in the system BIOS/UEFI, or is being blocked by another hypervisor (e.g., Hyper-V or WSL2) running on the host at the same time.
+
+**Fix used:**
+
+1.Restart the host and enter BIOS/UEFI(commonly F2, F10, F12, Del, or Esc depending on the manufacturer).
+
+2.Enable Intel VT-x or AMD-V / SVM Mode.
+
+3.Save and exit.
+
+4.On Windows, if it still fails, disable Hyper-V/WSL2 via Turn Windows features on or off.
+
+5.Restart and start the Kali VM again.
 
 ---
 
@@ -237,11 +268,13 @@ This lab is intended **strictly for educational and authorized testing purposes*
 
 ---
 
-# 🔗 Tools & Resources
+# 🔗 Tools & Reference
 
 - **7-Zip:** https://7-zip.org/download.html
 - **VirtualBox:** https://virtualbox.org/wiki/Downloads
 - **Kali Linux:** https://kali.org/get-kali
+- **Github Repo Guide:**https://github.com/waqaskarimccie/NETWORKWALKS-B082-WK1-PM1-CYBERSECURITY-LAB-SETUP
+  
 
 ---
 
@@ -250,5 +283,5 @@ This lab is intended **strictly for educational and authorized testing purposes*
 **Kritika Rai**
 Batch: B083 — NetworkWalks Cybersecurity Internship
 
-- LinkedIn: [your LinkedIn URL]
+- LinkedIn: [https://in.linkedin.com/in/kritika-rai-b46259406]
 - GitHub: [your GitHub URL]
